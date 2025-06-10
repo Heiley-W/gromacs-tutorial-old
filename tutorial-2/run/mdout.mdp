@@ -2,30 +2,30 @@
 ;	File 'mdout.mdp' was generated
 ;	By user: heiley (501)
 ;	On host: Heileys-MacBook-Air.local
-;	At date: Sun Jun  8 09:48:21 2025
+;	At date: Tue Jun 10 17:34:54 2025
 ;
 ;	Created by:
 ;	                :-) GROMACS - gmx grompp, 2025.1-Homebrew (-:
 ;	
 ;	Executable:   /opt/homebrew/bin/../Cellar/gromacs/2025.1/bin/gmx
 ;	Data prefix:  /opt/homebrew/bin/../Cellar/gromacs/2025.1
-;	Working dir:  /Users/heiley/Downloads/gromacs-tutorial/tutorial-2/run
+;	Working dir:  /Users/heiley/Desktop/SURP/gromacs-tutorial/tutorial-2/run
 ;	Command line:
-;	  gmx grompp -f step6.4_equilibration_NPT_step2.mdp -o step6.4_equilibration_NPT_step2.tpr -c step6.3_equilibration_NPT_step1.gro -r step5_input.gro -p topol.top -n index.ndx
+;	  gmx grompp -f step6.2_equilibration_NVT_step2.mdp -o step6.2_equilibration_NVT_step2.tpr -c step6.1_equilibration_NVT_step1.gro -r step5_input.gro -p topol.top -n index.ndx
 
 ; VARIOUS PREPROCESSING OPTIONS
 ; Preprocessor information: use cpp syntax.
 ; e.g.: -I/home/joe/doe -I/home/mary/roe
 include                  = 
 ; e.g.: -DPOSRES -DFLEXIBLE (note these variable names are case sensitive)
-define                   = -DPOSRES -DPOSRES_FC_BB=500.0 -DPOSRES_FC_SC=200.0 -DPOSRES_FC_LIPID=200.0 -DDIHRES -DDIHRES_FC=200.0
+define                   = -DPOSRES -DPOSRES_FC_BB=2000.0 -DPOSRES_FC_SC=1000.0 -DPOSRES_FC_LIPID=400.0 -DDIHRES -DDIHRES_FC=400.0
 
 ; RUN CONTROL PARAMETERS
 integrator               = md
 ; Start time and timestep in ps
 tinit                    = 0
-dt                       = 0.002
-nsteps                   = 500000
+dt                       = 0.001
+nsteps                   = 150000
 ; For exact run continuation or redoing part of a run
 init-step                = 0
 ; Part index is updated automatically on checkpointing (keeps files separate)
@@ -39,7 +39,7 @@ comm_mode                = linear
 ; number of steps for center of mass motion removal
 nstcomm                  = 100
 ; group(s) for center of mass motion removal
-comm_grps                = SYSTEM
+comm_grps                = SOLU_MEMB SOLV
 
 ; LANGEVIN DYNAMICS OPTIONS
 ; Friction coefficient (amu/ps) and random seed
@@ -147,15 +147,15 @@ tc_grps                  = SYSTEM
 tau_t                    = 1.0
 ref_t                    = 300
 ; pressure coupling     
-pcoupl                   = C-rescale
-pcoupltype               = semiisotropic
+pcoupl                   = no
+pcoupltype               = Isotropic
 nstpcouple               = -1
 ; Time constant (ps), compressibility (1/bar) and reference P (bar)
-tau_p                    = 5.0
-compressibility          = 4.5e-5  4.5e-5
-ref_p                    = 1.0     1.0
+tau-p                    = 5
+compressibility          = 
+ref-p                    = 
 ; Scaling of reference coordinates, No, All or COM
-refcoord_scaling         = com
+refcoord-scaling         = No
 
 ; OPTIONS FOR QMMM calculations
 QMMM                     = no
@@ -175,7 +175,7 @@ annealing-temp           =
 ; GENERATE VELOCITIES FOR STARTUP RUN
 gen-vel                  = no
 gen-temp                 = 300
-gen-seed                 = -1157719602
+gen-seed                 = 1803384699
 
 ; OPTIONS FOR BONDS    
 constraints              = h-bonds
