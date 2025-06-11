@@ -2,7 +2,7 @@
 ;	File 'mdout.mdp' was generated
 ;	By user: heiley (501)
 ;	On host: Heileys-MacBook-Air.local
-;	At date: Tue Jun 10 17:34:54 2025
+;	At date: Thu Jun 12 00:24:25 2025
 ;
 ;	Created by:
 ;	                :-) GROMACS - gmx grompp, 2025.1-Homebrew (-:
@@ -11,21 +11,21 @@
 ;	Data prefix:  /opt/homebrew/bin/../Cellar/gromacs/2025.1
 ;	Working dir:  /Users/heiley/Desktop/SURP/gromacs-tutorial/tutorial-2/run
 ;	Command line:
-;	  gmx grompp -f step6.2_equilibration_NVT_step2.mdp -o step6.2_equilibration_NVT_step2.tpr -c step6.1_equilibration_NVT_step1.gro -r step5_input.gro -p topol.top -n index.ndx
+;	  gmx grompp -f step7_production_revised.mdp -o step7_production.tpr -c step6.6_equilibration_NPT_step4.gro -t step6.6_equilibration_NPT_step4.cpt -p topol.top -n index.ndx
 
 ; VARIOUS PREPROCESSING OPTIONS
 ; Preprocessor information: use cpp syntax.
 ; e.g.: -I/home/joe/doe -I/home/mary/roe
 include                  = 
 ; e.g.: -DPOSRES -DFLEXIBLE (note these variable names are case sensitive)
-define                   = -DPOSRES -DPOSRES_FC_BB=2000.0 -DPOSRES_FC_SC=1000.0 -DPOSRES_FC_LIPID=400.0 -DDIHRES -DDIHRES_FC=400.0
+define                   = 
 
 ; RUN CONTROL PARAMETERS
 integrator               = md
 ; Start time and timestep in ps
 tinit                    = 0
-dt                       = 0.001
-nsteps                   = 150000
+dt                       = 0.002
+nsteps                   = 50000000
 ; For exact run continuation or redoing part of a run
 init-step                = 0
 ; Part index is updated automatically on checkpointing (keeps files separate)
@@ -37,7 +37,7 @@ mass-repartition-factor  = 1
 ; mode for center of mass motion removal
 comm_mode                = linear
 ; number of steps for center of mass motion removal
-nstcomm                  = 100
+nstcomm                  = 10000
 ; group(s) for center of mass motion removal
 comm_grps                = SOLU_MEMB SOLV
 
@@ -63,15 +63,15 @@ rtpi                     = 0.05
 
 ; OUTPUT CONTROL OPTIONS
 ; Output frequency for coords (x), velocities (v) and forces (f)
-nstxout                  = 0
-nstvout                  = 0
-nstfout                  = 0
+nstxout                  = 50000
+nstvout                  = 30000
+nstfout                  = 10000
 ; Output frequency for energies to log file and energy file
-nstlog                   = 1000
-nstcalcenergy            = 1000
-nstenergy                = 1000
+nstlog                   = 10000
+nstcalcenergy            = 10000
+nstenergy                = 10000
 ; Output frequency and precision for .xtc file
-nstxout-compressed       = 5000
+nstxout-compressed       = 10000
 compressed-x-precision   = 1000
 ; This selects the subset of atoms for the compressed
 ; trajectory file. You can select multiple groups. By
@@ -147,15 +147,15 @@ tc_grps                  = SYSTEM
 tau_t                    = 1.0
 ref_t                    = 300
 ; pressure coupling     
-pcoupl                   = no
-pcoupltype               = Isotropic
+pcoupl                   = C-rescale
+pcoupltype               = semiisotropic
 nstpcouple               = -1
 ; Time constant (ps), compressibility (1/bar) and reference P (bar)
-tau-p                    = 5
-compressibility          = 
-ref-p                    = 
+tau_p                    = 5.0
+compressibility          = 4.5e-5  4.5e-5
+ref_p                    = 1.0     1.0
 ; Scaling of reference coordinates, No, All or COM
-refcoord-scaling         = No
+refcoord_scaling         = com
 
 ; OPTIONS FOR QMMM calculations
 QMMM                     = no
@@ -175,7 +175,7 @@ annealing-temp           =
 ; GENERATE VELOCITIES FOR STARTUP RUN
 gen-vel                  = no
 gen-temp                 = 300
-gen-seed                 = 1803384699
+gen-seed                 = 2146459639
 
 ; OPTIONS FOR BONDS    
 constraints              = h-bonds
